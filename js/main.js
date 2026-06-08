@@ -92,8 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initCategoryFilter();
   initVillaCards();
   initFavorites();
-  initCalendar();
-  initDetailPage();
+  initDetailPage();   // initDetailPage internally handles calendar events
   initStep1();
   initStep2();
   initStep3();
@@ -220,33 +219,38 @@ function loadDetailPage() {
 }
 
 function initDetailPage() {
+  // Calendar nav
   document.getElementById('calPrev')?.addEventListener('click', () => {
-    CalState.current = new Date(CalState.current.getFullYear(), CalState.current.getMonth()-1, 1);
+    CalState.current = new Date(CalState.current.getFullYear(), CalState.current.getMonth() - 1, 1);
     renderCalendar();
   });
   document.getElementById('calNext')?.addEventListener('click', () => {
-    CalState.current = new Date(CalState.current.getFullYear(), CalState.current.getMonth()+1, 1);
+    CalState.current = new Date(CalState.current.getFullYear(), CalState.current.getMonth() + 1, 1);
     renderCalendar();
   });
 
+  // Booking card date inputs
   document.getElementById('checkIn')?.addEventListener('change', e => {
-    const d = new Date(e.target.value); d.setHours(0,0,0,0);
+    const d = new Date(e.target.value); d.setHours(0, 0, 0, 0);
     if (!isNaN(d)) { CalState.start = d; renderCalendar(); updateNbDate(); updatePriceCard(); }
   });
   document.getElementById('checkOut')?.addEventListener('change', e => {
-    const d = new Date(e.target.value); d.setHours(0,0,0,0);
+    const d = new Date(e.target.value); d.setHours(0, 0, 0, 0);
     if (!isNaN(d)) { CalState.end = d; renderCalendar(); updateNbDate(); updatePriceCard(); }
   });
 
+  // Reservasi button — always navigate
   document.getElementById('goToBookingBtn')?.addEventListener('click', () => {
-    // Always navigate — date validation is done at step 1
     saveBookingState();
     loadSummaries();
-    updateSumDateHighlight(); // pre-fill date inputs on step 1
+    updateSumDateHighlight();
     goTo('booking-step1', 'forward');
   });
 
   document.getElementById('showAllPhotos')?.addEventListener('click', openGallery);
+
+  // Render calendar on first load
+  renderCalendar();
 }
 
 /* -------------------------------------------------------
