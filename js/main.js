@@ -99,6 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initStep3();
   initSuccess();
   initScrollTop();
+  initSwipeBack();
   updateNavbar('home');
 });
 
@@ -239,8 +240,17 @@ function initDetailPage() {
 
   document.getElementById('goToBookingBtn')?.addEventListener('click', () => {
     if (!CalState.start || !CalState.end) {
-      showToast('error', '⚠️ Pilih tanggal check-in dan check-out di kalender');
-      document.getElementById('booking-calendar')?.scrollIntoView({ behavior:'smooth', block:'center' });
+      if (isMobile()) {
+        // On mobile: scroll to calendar section smoothly
+        showToast('error', '⚠️ Pilih tanggal check-in dan check-out di kalender');
+        // Hide fixed booking card temporarily to see calendar
+        setTimeout(() => {
+          document.getElementById('booking-calendar')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 100);
+      } else {
+        showToast('error', '⚠️ Pilih tanggal check-in dan check-out di kalender');
+        document.getElementById('booking-calendar')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
       return;
     }
     saveBookingState();
@@ -675,7 +685,36 @@ function showToast(type, msg) {
 }
 
 function initScrollTop() {
-  const btn=document.getElementById('scrollTop');
-  window.addEventListener('scroll',()=>btn?.classList.toggle('visible',window.scrollY>500));
-  btn?.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+  const btn = document.getElementById('scrollTop');
+  window.addEventListener('scroll', () => btn?.classList.toggle('visible', window.scrollY > 500));
+  btn?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+}
+
+/* -------------------------------------------------------
+   MOBILE: Touch swipe back gesture
+------------------------------------------------------- */
+function initSwipeBack() {
+  let touchStartX = 0;
+  let touchStartY = 0;
+
+  document.addEventListener('touchstart', e => {
+    touchStartX = e.changedTouches[0].screenX;
+    touchStartY = e.changedTouches[0].screenY;
+  }, { passive: true });
+
+  document.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].screenX - touchStartX;
+    const dy = Math.abs(e.changedTouches[0].screenY - touchStartY);
+    // Swipe right (from left edge) = go back
+    if (dx > 80 && dy < 60 && touchStartX < 40 && State.currentPage !== 'home') {
+      document.getElementById('navBackBtn')?.click();
+    }
+  }, { passive: true });
+}
+
+/* -------------------------------------------------------
+   MOBILE: isMobile helper
+------------------------------------------------------- */
+function isMobile() {
+  return window.innerWidth <= 600;
 }
