@@ -411,6 +411,30 @@
           <h2 class="booking-page-title">Data Diri Tamu</h2>
           <p class="booking-page-sub">Lengkapi informasi di bawah untuk melanjutkan reservasi</p>
 
+          <!-- Date Picker Section (wajib diisi) -->
+          <div id="s1-date-group" style="background:linear-gradient(135deg,#FFF8F9,#FFF0F3);border:1.5px solid #FFD0D8;border-radius:14px;padding:20px;margin-bottom:24px;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;">
+              <span style="font-size:20px;">📅</span>
+              <div>
+                <div style="font-size:15px;font-weight:700;color:#222;">Tanggal Menginap *</div>
+                <div style="font-size:13px;color:#717171;">Pilih check-in dan check-out Anda</div>
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+              <div class="form-group-ab" style="margin:0;">
+                <label class="form-label-ab" for="s1-checkin">Check-In</label>
+                <input class="form-input-ab" type="date" id="s1-checkin" required />
+                <span class="form-error-ab">Pilih tanggal check-in</span>
+              </div>
+              <div class="form-group-ab" style="margin:0;">
+                <label class="form-label-ab" for="s1-checkout">Check-Out</label>
+                <input class="form-input-ab" type="date" id="s1-checkout" required />
+                <span class="form-error-ab">Pilih tanggal check-out</span>
+              </div>
+            </div>
+            <div id="s1-nights-display" style="margin-top:12px;font-size:14px;color:#FF385C;font-weight:600;display:none;"></div>
+          </div>
+
           <div class="form-grid-ab">
             <div class="form-group-ab">
               <label class="form-label-ab" for="bk-name">Nama Lengkap *</label>

@@ -239,22 +239,10 @@ function initDetailPage() {
   });
 
   document.getElementById('goToBookingBtn')?.addEventListener('click', () => {
-    if (!CalState.start || !CalState.end) {
-      if (isMobile()) {
-        // On mobile: scroll to calendar section smoothly
-        showToast('error', '⚠️ Pilih tanggal check-in dan check-out di kalender');
-        // Hide fixed booking card temporarily to see calendar
-        setTimeout(() => {
-          document.getElementById('booking-calendar')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }, 100);
-      } else {
-        showToast('error', '⚠️ Pilih tanggal check-in dan check-out di kalender');
-        document.getElementById('booking-calendar')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
-      return;
-    }
+    // Always navigate — date validation is done at step 1
     saveBookingState();
     loadSummaries();
+    updateSumDateHighlight(); // pre-fill date inputs on step 1
     goTo('booking-step1', 'forward');
   });
 
@@ -427,8 +415,33 @@ function saveBookingState() {
    STEP 1: Data Diri
 ------------------------------------------------------- */
 function initStep1() {
+  // Sync step1 date inputs with CalState on page load
+  const s1ci = document.getElementById('s1-checkin');
+  const s1co = document.getElementById('s1-checkout');
+
+  if (s1ci) {
+    s1ci.min = new Date().toISOString().split('T')[0];
+    s1ci.addEventListener('change', e => {
+      const d = new Date(e.target.value); d.setHours(0,0,0,0);
+      if (!isNaN(d)) { CalState.start = d; updateSumDateHighlight(); loadSummaries(); }
+    });
+  }
+  if (s1co) {
+    s1co.min = new Date().toISOString().split('T')[0];
+    s1co.addEventListener('change', e => {
+      const d = new Date(e.target.value); d.setHours(0,0,0,0);
+      if (!isNaN(d)) { CalState.end = d; updateSumDateHighlight(); loadSummaries(); }
+    });
+  }
+
   document.getElementById('backFromStep1')?.addEventListener('click', () => goTo('detail', 'back'));
   document.getElementById('nextToStep2')?.addEventListener('click', () => {
+    // Sync date inputs into CalState first
+    const ci = document.getElementById('s1-checkin');
+    const co = document.getElementById('s1-checkout');
+    if (ci?.value && !CalState.start) { const d=new Date(ci.value);d.setHours(0,0,0,0);CalState.start=d; }
+    if (co?.value && !CalState.end)   { const d=new Date(co.value);d.setHours(0,0,0,0);CalState.end=d; }
+
     if (!validateStep1()) return;
     State.booking.name    = document.getElementById('bk-name').value.trim();
     State.booking.email   = document.getElementById('bk-email').value.trim();
@@ -441,9 +454,50 @@ function initStep1() {
   });
 }
 
+function updateSumDateHighlight() {
+  const s1ci = document.getElementById('s1-checkin');
+  const s1co = document.getElementById('s1-checkout');
+  const nd   = document.getElementById('s1-nights-display');
+
+  if (s1ci && CalState.start) s1ci.value = fmtDate(CalState.start);
+  if (s1co && CalState.end)   s1co.value = fmtDate(CalState.end);
+
+  // Set checkout min = checkin + 1
+  if (s1ci?.value && s1co) {
+    const nextDay = new Date(CalState.start || s1ci.value);
+    nextDay.setDate(nextDay.getDate() + 1);
+    s1co.min = fmtDate(nextDay);
+  }
+
+  // Show nights count
+  if (nd) {
+    const n = getNights();
+    if (n > 0) {
+      nd.textContent = `🌙 ${n} malam dipilih · Total estimasi: Rp ${calcPrice().total.toLocaleString('id-ID')}`;
+      nd.style.display = 'block';
+    } else {
+      nd.style.display = 'none';
+    }
+  }
+}
+
 function validateStep1() {
+  // Check dates first
+  if (!CalState.start || !CalState.end) {
+    // Highlight the date fields
+    document.getElementById('s1-checkin')?.closest('.form-group-ab')?.classList.add('has-error');
+    document.getElementById('s1-checkout')?.closest('.form-group-ab')?.classList.add('has-error');
+    showToast('error', '⚠️ Pilih tanggal check-in dan check-out');
+    document.getElementById('s1-date-group')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return false;
+  }
+  if (CalState.end <= CalState.start) {
+    showToast('error', '⚠️ Tanggal check-out harus setelah check-in');
+    return false;
+  }
+
   const fields = [
-    { id:'bk-name',   cond: v => v.length>=2 },
+    { id:'bk-name',   cond: v => v.length >= 2 },
     { id:'bk-email',  cond: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) },
     { id:'bk-phone',  cond: v => /^[0-9+\-\s()]{8,15}$/.test(v) },
     { id:'bk-guests', cond: v => v !== '' },
