@@ -59,6 +59,8 @@ function goTo(pageName, direction = 'forward') {
     window.scrollTo({ top: 0, behavior: 'instant' });
     State.currentPage = pageName;
     updateNavbar(pageName);
+    // Re-render Lucide icons in the newly active page
+    if (typeof lucide !== 'undefined') lucide.createIcons();
   }, 300);
 }
 
@@ -87,6 +89,9 @@ function updateNavbar(page) {
    INIT
 ------------------------------------------------------- */
 document.addEventListener('DOMContentLoaded', () => {
+  // Init Lucide icons
+  if (typeof lucide !== 'undefined') lucide.createIcons();
+
   setDateInputMin();
   initNavbar();
   initCategoryFilter();
@@ -303,7 +308,7 @@ function clickDay(date) {
   } else {
     if (date.getTime()===CalState.start.getTime()) { CalState.start=null; CalState.selecting=false; renderCalendar(); return; }
     const [s,e] = date < CalState.start ? [date,CalState.start] : [CalState.start,date];
-    if (rangeBooked(s,e)) { showToast('error','⚠️ Rentang mengandung tanggal yang sudah dipesan'); CalState.start=null;CalState.end=null;CalState.selecting=false; renderCalendar(); return; }
+    if (rangeBooked(s,e)) { showToast('error','Rentang mengandung tanggal yang sudah dipesan'); CalState.start=null;CalState.end=null;CalState.selecting=false; renderCalendar(); return; }
     CalState.start=s; CalState.end=e; CalState.selecting=false;
     syncDateInputs(); updateNbDate();
   }
@@ -328,9 +333,9 @@ function updateCalDisplay() {
   const n = getNights();
   const cn = document.getElementById('calNights');
   if (cn) {
-    if (CalState.start && CalState.end) { cn.innerHTML = `🌙 <strong>${n} malam</strong> dipilih`; cn.style.background='#FFF8F9'; }
-    else if (CalState.start) { cn.textContent='📅 Pilih tanggal check-out'; cn.style.background='#FFFBF0'; }
-    else { cn.textContent='📅 Klik tanggal check-in'; cn.style.background='#F7F7F7'; }
+    if (CalState.start && CalState.end) { cn.innerHTML = `<strong>${n} malam</strong> dipilih`; cn.style.background=''; }
+    else if (CalState.start) { cn.textContent='Pilih tanggal check-out'; cn.style.background=''; }
+    else { cn.textContent='Klik tanggal check-in untuk mulai'; cn.style.background=''; }
   }
 }
 
@@ -477,7 +482,7 @@ function updateSumDateHighlight() {
   if (nd) {
     const n = getNights();
     if (n > 0) {
-      nd.textContent = `🌙 ${n} malam dipilih · Total estimasi: Rp ${calcPrice().total.toLocaleString('id-ID')}`;
+      nd.textContent = `${n} malam dipilih — Total estimasi: Rp ${calcPrice().total.toLocaleString('id-ID')}`;
       nd.style.display = 'block';
     } else {
       nd.style.display = 'none';
@@ -491,12 +496,12 @@ function validateStep1() {
     // Highlight the date fields
     document.getElementById('s1-checkin')?.closest('.form-group-ab')?.classList.add('has-error');
     document.getElementById('s1-checkout')?.closest('.form-group-ab')?.classList.add('has-error');
-    showToast('error', '⚠️ Pilih tanggal check-in dan check-out');
+    showToast('error', 'Pilih tanggal check-in dan check-out');
     document.getElementById('s1-date-group')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
     return false;
   }
   if (CalState.end <= CalState.start) {
-    showToast('error', '⚠️ Tanggal check-out harus setelah check-in');
+    showToast('error', 'Tanggal check-out harus setelah check-in');
     return false;
   }
 
@@ -513,7 +518,7 @@ function validateStep1() {
     if (!el || !cond(el.value.trim())) { g?.classList.add('has-error'); ok = false; }
     else g?.classList.remove('has-error');
   });
-  if (!ok) showToast('error', '⚠️ Harap isi semua data yang wajib diisi');
+  if (!ok) showToast('error', 'Harap isi semua data yang wajib diisi');
   return ok;
 }
 
@@ -528,7 +533,7 @@ function initStep2() {
 
   document.getElementById('backFromStep2')?.addEventListener('click', () => goTo('booking-step1', 'back'));
   document.getElementById('nextToStep3')?.addEventListener('click', () => {
-    if (!State.booking.payment) { showToast('error','⚠️ Pilih metode pembayaran terlebih dahulu'); return; }
+    if (!State.booking.payment) { showToast('error','Pilih metode pembayaran terlebih dahulu'); return; }
     fillReviewPage();
     goTo('booking-step3', 'forward');
   });
@@ -537,12 +542,16 @@ function initStep2() {
 function selectPayment(selected) {
   document.querySelectorAll('.payment-method').forEach(m => {
     m.classList.remove('selected');
-    const c = m.querySelector('.pm-check'); if(c) c.textContent='';
+    const c = m.querySelector('.pm-check');
+    if (c) c.innerHTML = '<i data-lucide="check" width="14" height="14"></i>';
+    if (c) c.style.display = 'none';
   });
   selected.classList.add('selected');
-  const c = selected.querySelector('.pm-check'); if(c) c.textContent='✓';
+  const c = selected.querySelector('.pm-check');
+  if (c) { c.style.display = 'flex'; c.innerHTML = '<i data-lucide="check" width="14" height="14"></i>'; }
   State.booking.payment = selected.querySelector('.pm-name')?.textContent || '';
   renderPaymentFields(selected.dataset.payment);
+  if (typeof lucide !== 'undefined') lucide.createIcons();
 }
 
 function renderPaymentFields(type) {
@@ -551,12 +560,12 @@ function renderPaymentFields(type) {
 
   if (type === 'cc') {
     container.innerHTML = `
-      <div style="margin-top:20px;padding:20px;background:#F7F7F7;border-radius:14px;">
-        <p style="font-size:13px;font-weight:700;color:#222;margin-bottom:16px;">💳 Detail Kartu Kredit/Debit</p>
+      <div style="margin-top:20px;padding:20px;background:#F7F7F7;border-radius:12px;border:1px solid #DDD;">
+        <p style="font-size:13px;font-weight:700;color:#222;margin-bottom:16px;">Detail Kartu Kredit / Debit</p>
         <div class="form-group-ab"><label class="form-label-ab">Nomor Kartu</label><input class="form-input-ab" id="cc-num" type="text" placeholder="1234 5678 9012 3456" maxlength="19" /></div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;">
           <div class="form-group-ab"><label class="form-label-ab">Masa Berlaku</label><input class="form-input-ab" id="cc-exp" type="text" placeholder="MM/YY" maxlength="5" /></div>
-          <div class="form-group-ab"><label class="form-label-ab">CVV</label><input class="form-input-ab" id="cc-cvv" type="password" placeholder="•••" maxlength="4" /></div>
+          <div class="form-group-ab"><label class="form-label-ab">CVV</label><input class="form-input-ab" id="cc-cvv" type="password" placeholder="&bull;&bull;&bull;" maxlength="4" /></div>
         </div>
         <div class="form-group-ab" style="margin-top:12px;"><label class="form-label-ab">Nama di Kartu</label><input class="form-input-ab" id="cc-name" type="text" placeholder="Sesuai kartu" /></div>
       </div>`;
@@ -571,11 +580,11 @@ function renderPaymentFields(type) {
     });
   } else if (type === 'transfer') {
     container.innerHTML = `
-      <div style="margin-top:20px;background:#F7F7F7;border-radius:14px;padding:20px;">
-        <p style="font-size:13px;font-weight:700;color:#222;margin-bottom:14px;">🏦 Rekening Tujuan Transfer</p>
-        <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="margin-top:20px;background:#F7F7F7;border-radius:12px;padding:20px;border:1px solid #DDD;">
+        <p style="font-size:13px;font-weight:700;color:#222;margin-bottom:14px;">Rekening Tujuan Transfer</p>
+        <div style="display:flex;flex-direction:column;gap:8px;">
           ${[['BCA','1234-5678-90'],['Mandiri','9876-5432-10'],['BNI','1111-2222-33'],['BRI','4444-5555-66']].map(([b,n])=>`
-          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#fff;border-radius:8px;border:1px solid #EEEEEE;">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#fff;border-radius:8px;border:1px solid #EEE;">
             <span style="font-size:14px;color:#717171;">${b}</span>
             <strong style="font-size:14px;letter-spacing:1px;">${n}</strong>
           </div>`).join('')}
@@ -587,12 +596,11 @@ function renderPaymentFields(type) {
       </div>`;
   } else if (type === 'va') {
     container.innerHTML = `
-      <div style="margin-top:20px;background:#F7F7F7;border-radius:14px;padding:20px;">
-        <p style="font-size:13px;font-weight:700;color:#222;margin-bottom:14px;">🏧 Pilih Bank Virtual Account</p>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div style="margin-top:20px;background:#F7F7F7;border-radius:12px;padding:20px;border:1px solid #DDD;">
+        <p style="font-size:13px;font-weight:700;color:#222;margin-bottom:14px;">Pilih Bank Virtual Account</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
           ${['BCA VA','Mandiri VA','BNI VA','BRI VA','Permata VA','CIMB VA'].map(b=>`
-          <div class="payment-method" style="padding:10px;cursor:pointer;" onclick="this.parentElement.querySelectorAll('.payment-method').forEach(x=>x.classList.remove('selected'));this.classList.add('selected');this.style.borderColor='#FF385C';">
-            <span class="pm-icon" style="font-size:18px;">🏦</span>
+          <div class="payment-method" style="padding:10px;cursor:pointer;" onclick="this.parentElement.querySelectorAll('.payment-method').forEach(x=>{x.classList.remove('selected');x.style.borderColor='';});this.classList.add('selected');this.style.borderColor='#222';">
             <div class="pm-info"><div class="pm-name" style="font-size:13px;">${b}</div></div>
           </div>`).join('')}
         </div>
@@ -600,10 +608,26 @@ function renderPaymentFields(type) {
       </div>`;
   } else if (type === 'qris') {
     container.innerHTML = `
-      <div style="margin-top:20px;background:#F7F7F7;border-radius:14px;padding:24px;text-align:center;">
-        <p style="font-size:13px;font-weight:700;color:#222;margin-bottom:16px;">📲 QRIS — Scan untuk Bayar</p>
-        <div style="width:160px;height:160px;margin:0 auto 16px;background:#fff;border:2px solid #DDDDDD;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:90px;">▣</div>
-        <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:12px;">
+      <div style="margin-top:20px;background:#F7F7F7;border-radius:12px;padding:24px;text-align:center;border:1px solid #DDD;">
+        <p style="font-size:13px;font-weight:700;color:#222;margin-bottom:16px;">QRIS — Scan untuk Bayar</p>
+        <div style="width:160px;height:160px;margin:0 auto 16px;background:#fff;border:2px solid #DDD;border-radius:12px;display:flex;align-items:center;justify-content:center;">
+          <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="5" y="5" width="50" height="50" rx="4" stroke="#222" stroke-width="4" fill="none"/>
+            <rect x="18" y="18" width="24" height="24" rx="2" fill="#222"/>
+            <rect x="65" y="5" width="50" height="50" rx="4" stroke="#222" stroke-width="4" fill="none"/>
+            <rect x="78" y="18" width="24" height="24" rx="2" fill="#222"/>
+            <rect x="5" y="65" width="50" height="50" rx="4" stroke="#222" stroke-width="4" fill="none"/>
+            <rect x="18" y="78" width="24" height="24" rx="2" fill="#222"/>
+            <rect x="65" y="65" width="8" height="8" fill="#222"/>
+            <rect x="78" y="65" width="8" height="8" fill="#222"/>
+            <rect x="91" y="65" width="24" height="8" fill="#222"/>
+            <rect x="65" y="78" width="8" height="8" fill="#222"/>
+            <rect x="78" y="91" width="8" height="8" fill="#222"/>
+            <rect x="91" y="78" width="8" height="37" fill="#222"/>
+            <rect x="104" y="78" width="11" height="8" fill="#222"/>
+          </svg>
+        </div>
+        <div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:12px;">
           ${['GoPay','OVO','DANA','ShopeePay','LinkAja'].map(a=>`<span style="font-size:12px;background:#fff;border:1px solid #DDD;padding:4px 10px;border-radius:20px;">${a}</span>`).join('')}
         </div>
         <p style="font-size:12px;color:#717171;">QRIS berlaku selama <strong>15 menit</strong> setelah klik konfirmasi</p>

@@ -4,33 +4,28 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
   <meta name="theme-color" content="#FF385C" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-  <title>Villa Santara — Temukan Villa Impian Anda</title>
+  <meta name="mobile-web-app-capable" content="yes" />
+  <title>Villa Santara — Temukan Villa Impian Anda di Bali</title>
   <meta name="description" content="Temukan villa mewah dengan kolam renang pribadi di Bali. Booking mudah, harga transparan, konfirmasi instan." />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏡</text></svg>" />
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='16' fill='%23FF385C'/><text y='22' x='5' font-size='18'>S</text></svg>" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 
-<!-- ============================================================
-     NAVBAR (Persistent)
-     ============================================================ -->
+<!-- NAVBAR -->
 <nav class="navbar" id="navbar">
   <div class="navbar-top">
-    <a href="#" class="logo" id="logoBtn" aria-label="Kembali ke beranda">
-      <span class="logo-text">
-        <svg viewBox="0 0 160 36" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="16" cy="16" r="14" fill="#FF385C" opacity="0.15"/>
-          <text x="8" y="22" font-family="serif" font-size="20" fill="#FF385C">🏡</text>
-          <text x="36" y="24" font-family="Plus Jakarta Sans,sans-serif" font-size="19" font-weight="800" fill="#FF385C">santara</text>
-        </svg>
-      </span>
+    <a href="#" class="logo" id="logoBtn" aria-label="Beranda">
+      <svg viewBox="0 0 130 32" xmlns="http://www.w3.org/2000/svg" class="logo-svg">
+        <rect width="28" height="28" rx="6" fill="#FF385C" y="2"/>
+        <text x="7" y="21" font-family="serif" font-size="16" font-weight="700" fill="white">S</text>
+        <text x="34" y="22" font-family="Plus Jakarta Sans,sans-serif" font-size="17" font-weight="800" fill="#FF385C">santara</text>
+      </svg>
     </a>
 
-    <!-- Search pill (visible on home) -->
     <div class="navbar-search" id="navSearchPill" role="search">
       <div class="nb-search-field">
         <span class="nb-search-label">Lokasi</span>
@@ -40,69 +35,87 @@
         <span class="nb-search-label">Kapan</span>
         <span class="nb-search-value" id="nbDateDisplay">Tambahkan tanggal</span>
       </div>
-      <div class="nb-search-field" style="border-right:none;">
+      <div class="nb-search-field nb-last">
         <span class="nb-search-label">Peserta</span>
         <span class="nb-search-value">Tambahkan tamu</span>
       </div>
       <button class="nb-search-btn" id="navSearchBtn" aria-label="Cari">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        <i data-lucide="search" width="14" height="14"></i>
       </button>
     </div>
 
-    <!-- Page breadcrumb (visible on inner pages) -->
     <div class="navbar-breadcrumb" id="navBreadcrumb" style="display:none;">
-      <button class="back-btn" id="navBackBtn" aria-label="Kembali">←</button>
+      <button class="back-btn" id="navBackBtn" aria-label="Kembali">
+        <i data-lucide="arrow-left" width="18" height="18"></i>
+      </button>
       <span class="breadcrumb-title" id="breadcrumbTitle">Detail Villa</span>
     </div>
 
     <div class="nav-right">
       <button class="nav-host-btn" id="hostBtn">Menjadi Tuan Rumah</button>
-      <button class="nav-globe" aria-label="Bahasa">🌐</button>
+      <button class="nav-icon-btn" aria-label="Bahasa">
+        <i data-lucide="globe" width="18" height="18"></i>
+      </button>
       <div class="nav-user-menu" id="userMenuBtn" role="button">
-        <span class="nav-hamburger">☰</span>
-        <div class="nav-avatar">👤</div>
+        <i data-lucide="menu" width="16" height="16"></i>
+        <div class="nav-avatar">
+          <i data-lucide="user" width="16" height="16"></i>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Category tabs (home only) -->
   <div class="navbar-categories" id="navCategories">
     <div class="categories-inner">
-      <div class="category-item active" data-filter="all"><span class="category-icon">🏡</span><span class="category-label">Semua</span></div>
-      <div class="category-item" data-filter="pool"><span class="category-icon">🏊</span><span class="category-label">Private Pool</span></div>
-      <div class="category-item" data-filter="romantic"><span class="category-icon">💑</span><span class="category-label">Romantis</span></div>
-      <div class="category-item" data-filter="family"><span class="category-icon">👨‍👩‍👧‍👦</span><span class="category-label">Keluarga</span></div>
-      <div class="category-item" data-filter="luxury"><span class="category-icon">✨</span><span class="category-label">Luxury</span></div>
-      <div class="category-item" data-filter="beach"><span class="category-icon">🏖️</span><span class="category-label">Pantai</span></div>
-      <div class="category-item" data-filter="mountain"><span class="category-icon">⛰️</span><span class="category-label">Pegunungan</span></div>
+      <button class="category-item active" data-filter="all">
+        <i data-lucide="home" width="22" height="22"></i>
+        <span class="category-label">Semua</span>
+      </button>
+      <button class="category-item" data-filter="pool">
+        <i data-lucide="waves" width="22" height="22"></i>
+        <span class="category-label">Private Pool</span>
+      </button>
+      <button class="category-item" data-filter="romantic">
+        <i data-lucide="heart" width="22" height="22"></i>
+        <span class="category-label">Romantis</span>
+      </button>
+      <button class="category-item" data-filter="family">
+        <i data-lucide="users" width="22" height="22"></i>
+        <span class="category-label">Keluarga</span>
+      </button>
+      <button class="category-item" data-filter="luxury">
+        <i data-lucide="sparkles" width="22" height="22"></i>
+        <span class="category-label">Luxury</span>
+      </button>
+      <button class="category-item" data-filter="beach">
+        <i data-lucide="umbrella" width="22" height="22"></i>
+        <span class="category-label">Pantai</span>
+      </button>
+      <button class="category-item" data-filter="mountain">
+        <i data-lucide="mountain" width="22" height="22"></i>
+        <span class="category-label">Pegunungan</span>
+      </button>
     </div>
   </div>
 </nav>
 
-<!-- ============================================================
-     APP CONTAINER — semua halaman ada di sini
-     ============================================================ -->
 <div id="app">
 
-  <!-- ==========================================
-       PAGE 1: HOME (Listings)
-       ========================================== -->
+  <!-- PAGE 1: HOME -->
   <div class="page active" id="page-home">
-    <!-- Hero -->
     <div class="hero-wrap">
       <img src="images/villa_hero.png" alt="Villa mewah di Bali" class="hero-image-full" />
       <div class="hero-overlay-content">
-        <span class="hero-tag">🌴 Destinasi Terpopuler 2026</span>
+        <span class="hero-tag">Destinasi Terpopuler 2026</span>
         <h1 class="hero-title">Villa Eksklusif<br>di Bali</h1>
         <p class="hero-subtitle">Kolam renang pribadi · Pemandangan alam · Layanan premium</p>
         <div class="hero-cta">
-          <button class="btn btn-primary" id="heroBookBtn">Pesan Sekarang</button>
-          <button class="btn btn-glass" id="heroListBtn">Lihat Villa ↓</button>
+          <button class="btn btn-primary" id="heroBookBtn">Jelajahi Villa</button>
+          <button class="btn btn-white" id="heroListBtn">Lihat Semua</button>
         </div>
       </div>
     </div>
 
-    <!-- Search Bar -->
     <div class="hero-searchbar-section">
       <div class="container">
         <form class="hero-searchbar" id="quickSearchForm">
@@ -118,8 +131,8 @@
             <label class="hs-label" for="hs-checkout">Check-Out</label>
             <input class="hs-input" type="date" id="hs-checkout" />
           </div>
-          <div class="hs-field" style="border-right:none;">
-            <label class="hs-label" for="hs-guests">Peserta</label>
+          <div class="hs-field hs-last">
+            <label class="hs-label" for="hs-guests">Tamu</label>
             <select class="hs-input" id="hs-guests">
               <option value="">Tambahkan tamu</option>
               <option value="1">1 tamu</option>
@@ -130,32 +143,35 @@
             </select>
           </div>
           <button type="submit" class="hs-search-btn">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+            <i data-lucide="search" width="16" height="16"></i>
             Cari
           </button>
         </form>
       </div>
     </div>
 
-    <!-- Villa Listings -->
     <div class="section-villas" id="villas-section">
       <div class="container">
-        <h2 class="section-label">Penginapan populer di Bali <a href="#">→</a></h2>
+        <h2 class="section-label">Penginapan populer di Bali</h2>
         <div class="villas-grid" id="villasGrid">
 
           <article class="villa-card" data-villa-id="1" data-type="romantic pool">
             <div class="villa-card-image">
               <img src="images/villa_1.png" alt="Villa Kayu Indah" loading="lazy" />
               <span class="villa-badge-top">Pilihan tamu</span>
-              <button class="villa-fav" aria-label="Simpan">🤍</button>
+              <button class="villa-fav" aria-label="Simpan ke favorit">
+                <i data-lucide="heart" width="18" height="18"></i>
+              </button>
             </div>
             <div class="villa-card-body">
               <div class="villa-card-row1">
-                <span class="villa-location-name">Villa di Ubud, Bali</span>
-                <div class="villa-rating-inline">★ 4.93</div>
+                <span class="villa-location-name">Ubud, Bali</span>
+                <div class="villa-rating-inline">
+                  <i data-lucide="star" width="12" height="12" class="icon-star"></i>
+                  4.93
+                </div>
               </div>
               <p class="villa-sub-info">Villa Kayu Indah · 2 kamar · Private Pool</p>
-              <p class="villa-dates-info">Mulai 1 Jun 2026</p>
               <p class="villa-price-info"><strong>Rp 2.500.000</strong> <span>/ malam</span></p>
             </div>
           </article>
@@ -164,15 +180,19 @@
             <div class="villa-card-image">
               <img src="images/villa_2.png" alt="Villa Kolam Sunrise" loading="lazy" />
               <span class="villa-badge-top">Pilihan tamu</span>
-              <button class="villa-fav" aria-label="Simpan">🤍</button>
+              <button class="villa-fav" aria-label="Simpan ke favorit">
+                <i data-lucide="heart" width="18" height="18"></i>
+              </button>
             </div>
             <div class="villa-card-body">
               <div class="villa-card-row1">
-                <span class="villa-location-name">Villa di Seminyak, Bali</span>
-                <div class="villa-rating-inline">★ 4.85</div>
+                <span class="villa-location-name">Seminyak, Bali</span>
+                <div class="villa-rating-inline">
+                  <i data-lucide="star" width="12" height="12" class="icon-star"></i>
+                  4.85
+                </div>
               </div>
               <p class="villa-sub-info">Villa Kolam Sunrise · 3 kamar · Infinity Pool</p>
-              <p class="villa-dates-info">Mulai 5 Jun 2026</p>
               <p class="villa-price-info"><strong>Rp 3.800.000</strong> <span>/ malam</span></p>
             </div>
           </article>
@@ -181,15 +201,19 @@
             <div class="villa-card-image">
               <img src="images/villa_3.png" alt="Villa Bale Agung" loading="lazy" />
               <span class="villa-badge-top">Pilihan tamu</span>
-              <button class="villa-fav" aria-label="Simpan">🤍</button>
+              <button class="villa-fav" aria-label="Simpan ke favorit">
+                <i data-lucide="heart" width="18" height="18"></i>
+              </button>
             </div>
             <div class="villa-card-body">
               <div class="villa-card-row1">
-                <span class="villa-location-name">Villa di Canggu, Bali</span>
-                <div class="villa-rating-inline">★ 5.0</div>
+                <span class="villa-location-name">Canggu, Bali</span>
+                <div class="villa-rating-inline">
+                  <i data-lucide="star" width="12" height="12" class="icon-star"></i>
+                  5.0
+                </div>
               </div>
               <p class="villa-sub-info">Villa Bale Agung · 5 kamar · Taman Luas</p>
-              <p class="villa-dates-info">Mulai 10 Jun 2026</p>
               <p class="villa-price-info"><strong>Rp 5.500.000</strong> <span>/ malam</span></p>
             </div>
           </article>
@@ -198,15 +222,19 @@
             <div class="villa-card-image">
               <img src="images/villa_hero.png" alt="Villa Tepi Samudra" loading="lazy" />
               <span class="villa-badge-top">Baru</span>
-              <button class="villa-fav" aria-label="Simpan">🤍</button>
+              <button class="villa-fav" aria-label="Simpan ke favorit">
+                <i data-lucide="heart" width="18" height="18"></i>
+              </button>
             </div>
             <div class="villa-card-body">
               <div class="villa-card-row1">
-                <span class="villa-location-name">Villa di Jimbaran, Bali</span>
-                <div class="villa-rating-inline">★ 4.97</div>
+                <span class="villa-location-name">Jimbaran, Bali</span>
+                <div class="villa-rating-inline">
+                  <i data-lucide="star" width="12" height="12" class="icon-star"></i>
+                  4.97
+                </div>
               </div>
               <p class="villa-sub-info">Villa Tepi Samudra · 4 kamar · Beach Front</p>
-              <p class="villa-dates-info">Mulai 15 Jun 2026</p>
               <p class="villa-price-info"><strong>Rp 7.200.000</strong> <span>/ malam</span></p>
             </div>
           </article>
@@ -215,7 +243,6 @@
       </div>
     </div>
 
-    <!-- Footer -->
     <footer class="footer">
       <div class="container">
         <div class="footer-top">
@@ -225,21 +252,25 @@
           <div class="footer-col"><h4>Villa Santara</h4><ul><li><a href="#">Tentang kami</a></li><li><a href="#">Karir</a></li><li><a href="#">Privasi</a></li></ul></div>
         </div>
         <div class="footer-bottom">
-          <div class="footer-bottom-left"><span>© 2026 Villa Santara, Inc.</span><span class="fb-dot">·</span><a href="#">Privasi</a><span class="fb-dot">·</span><a href="#">Ketentuan</a></div>
-          <div class="footer-social"><a href="#">Ⓕ</a><a href="#">𝕏</a><a href="#">📷</a></div>
+          <div class="footer-bottom-left">
+            <span>© 2026 Villa Santara, Inc.</span>
+            <span class="fb-dot">·</span><a href="#">Privasi</a>
+            <span class="fb-dot">·</span><a href="#">Ketentuan</a>
+          </div>
+          <div class="footer-social">
+            <a href="#" aria-label="Facebook"><i data-lucide="facebook" width="18" height="18"></i></a>
+            <a href="#" aria-label="Instagram"><i data-lucide="instagram" width="18" height="18"></i></a>
+            <a href="#" aria-label="Twitter"><i data-lucide="twitter" width="18" height="18"></i></a>
+          </div>
         </div>
       </div>
     </footer>
   </div><!-- /page-home -->
 
 
-  <!-- ==========================================
-       PAGE 2: DETAIL VILLA
-       ========================================== -->
+  <!-- PAGE 2: DETAIL VILLA -->
   <div class="page" id="page-detail">
     <div class="container">
-
-      <!-- Photo Grid -->
       <div class="photo-grid-wrap">
         <div class="photo-grid">
           <div class="photo-main"><img src="images/villa_hero.png" alt="Tampak utama villa" id="detailMainPhoto" /></div>
@@ -250,18 +281,21 @@
             <img src="images/villa_hero.png" alt="Eksterior" id="detailPhoto5" />
           </div>
         </div>
-        <button class="show-all-btn" id="showAllPhotos">⊞ Tampilkan semua foto</button>
+        <button class="show-all-btn" id="showAllPhotos">
+          <i data-lucide="layout-grid" width="14" height="14"></i>
+          Tampilkan semua foto
+        </button>
       </div>
 
-      <!-- Detail layout -->
       <div class="detail-layout">
-        <!-- LEFT -->
         <div class="detail-left">
-          <h2 class="detail-title" id="detailTitle">Villa Kayu Indah di Ubud yang menghadap hutan tropis</h2>
+          <h2 class="detail-title" id="detailTitle">Villa Kayu Indah di Ubud, Bali</h2>
           <div class="detail-meta">
-            <span class="detail-rating-link" id="detailRating">★ 4.93</span>
+            <span class="detail-rating-link" id="detailRating">
+              <i data-lucide="star" width="13" height="13" class="icon-star"></i> 4.93
+            </span>
             <span class="dot">·</span>
-            <span style="text-decoration:underline;cursor:pointer;font-weight:600;" id="detailReviewCount">128 ulasan</span>
+            <span style="text-decoration:underline;cursor:pointer;font-weight:500;" id="detailReviewCount">128 ulasan</span>
             <span class="dot">·</span>
             <span id="detailLocation">Ubud, Bali</span>
           </div>
@@ -277,42 +311,53 @@
 
           <div class="divider"></div>
           <div class="features-list">
-            <div class="feature-item"><span class="feature-icon">🏆</span><div class="feature-text"><h4>Superhost</h4><p>Tuan rumah berpengalaman dengan komitmen pengalaman terbaik untuk tamu.</p></div></div>
-            <div class="feature-item"><span class="feature-icon">📍</span><div class="feature-text"><h4>Lokasi sempurna</h4><p>96% tamu memberikan bintang 5 untuk lokasi ini.</p></div></div>
-            <div class="feature-item"><span class="feature-icon">🔑</span><div class="feature-text"><h4>Check-in mandiri</h4><p>Masuk sendiri dengan lockbox — tidak perlu tunggu tuan rumah.</p></div></div>
-            <div class="feature-item"><span class="feature-icon">✅</span><div class="feature-text"><h4>Pembatalan gratis</h4><p>Batalkan sebelum check-in untuk pengembalian penuh.</p></div></div>
+            <div class="feature-item">
+              <span class="feature-icon-wrap"><i data-lucide="award" width="22" height="22"></i></span>
+              <div class="feature-text"><h4>Superhost</h4><p>Tuan rumah berpengalaman dengan komitmen memberikan pengalaman terbaik.</p></div>
+            </div>
+            <div class="feature-item">
+              <span class="feature-icon-wrap"><i data-lucide="map-pin" width="22" height="22"></i></span>
+              <div class="feature-text"><h4>Lokasi sempurna</h4><p>96% tamu memberikan bintang 5 untuk lokasi ini.</p></div>
+            </div>
+            <div class="feature-item">
+              <span class="feature-icon-wrap"><i data-lucide="key" width="22" height="22"></i></span>
+              <div class="feature-text"><h4>Check-in mandiri</h4><p>Masuk sendiri dengan lockbox — tidak perlu tunggu tuan rumah.</p></div>
+            </div>
+            <div class="feature-item">
+              <span class="feature-icon-wrap"><i data-lucide="shield-check" width="22" height="22"></i></span>
+              <div class="feature-text"><h4>Pembatalan gratis</h4><p>Batalkan sebelum check-in untuk pengembalian dana penuh.</p></div>
+            </div>
           </div>
 
           <div class="divider"></div>
           <div>
             <p class="description-text" id="detailDesc">Selamat datang di villa kami — sepotong surga tersembunyi di jantung Bali. Nikmati ketenangan sempurna dengan sentuhan arsitektur tradisional yang dipadukan dengan kenyamanan modern premium. Kolam renang privat, taman tropis, dan pemandangan alam yang memukau menanti Anda.</p>
-            <button class="show-more-btn">Tampilkan selengkapnya ›</button>
+            <button class="show-more-btn">Tampilkan selengkapnya <i data-lucide="chevron-right" width="14" height="14"></i></button>
           </div>
 
           <div class="divider"></div>
           <div class="amenities-section">
             <h3>Yang ditawarkan tempat ini</h3>
             <div class="amenities-grid-ab">
-              <div class="amenity-item"><span class="ai-icon">🏊</span> Kolam renang privat</div>
-              <div class="amenity-item"><span class="ai-icon">📶</span> WiFi kecepatan tinggi</div>
-              <div class="amenity-item"><span class="ai-icon">🍳</span> Dapur lengkap</div>
-              <div class="amenity-item"><span class="ai-icon">❄️</span> AC di setiap kamar</div>
-              <div class="amenity-item"><span class="ai-icon">🚗</span> Parkir gratis</div>
-              <div class="amenity-item"><span class="ai-icon">🛁</span> Bathtub outdoor</div>
-              <div class="amenity-item"><span class="ai-icon">📺</span> Smart TV + Netflix</div>
-              <div class="amenity-item"><span class="ai-icon">🌿</span> Taman tropis privat</div>
+              <div class="amenity-item"><i data-lucide="waves" width="20" height="20"></i> Kolam renang privat</div>
+              <div class="amenity-item"><i data-lucide="wifi" width="20" height="20"></i> WiFi kecepatan tinggi</div>
+              <div class="amenity-item"><i data-lucide="utensils" width="20" height="20"></i> Dapur lengkap</div>
+              <div class="amenity-item"><i data-lucide="wind" width="20" height="20"></i> AC di setiap kamar</div>
+              <div class="amenity-item"><i data-lucide="car" width="20" height="20"></i> Parkir gratis</div>
+              <div class="amenity-item"><i data-lucide="droplets" width="20" height="20"></i> Bathtub outdoor</div>
+              <div class="amenity-item"><i data-lucide="tv" width="20" height="20"></i> Smart TV + Netflix</div>
+              <div class="amenity-item"><i data-lucide="leaf" width="20" height="20"></i> Taman tropis privat</div>
             </div>
           </div>
 
           <div class="divider"></div>
-          <!-- KALENDER -->
           <div id="booking-calendar">
             <h3 class="calendar-section-title">Pilih tanggal menginap</h3>
             <div class="calendar-wrapper">
               <div class="calendar-header">
-                <button class="cal-nav" id="calPrev">‹</button>
+                <button class="cal-nav" id="calPrev"><i data-lucide="chevron-left" width="18" height="18"></i></button>
                 <span class="cal-month-year" id="calMonthYear">Juni 2026</span>
-                <button class="cal-nav" id="calNext">›</button>
+                <button class="cal-nav" id="calNext"><i data-lucide="chevron-right" width="18" height="18"></i></button>
               </div>
               <div class="calendar-grid" id="calGrid" role="grid"></div>
               <div class="calendar-legend">
@@ -324,29 +369,32 @@
                 <div class="cal-date-display"><label>Check-In</label><span id="calCheckIn">Pilih tanggal</span></div>
                 <div class="cal-date-display"><label>Check-Out</label><span id="calCheckOut">Pilih tanggal</span></div>
               </div>
-              <div class="cal-nights" id="calNights">📅 Klik tanggal check-in</div>
+              <div class="cal-nights" id="calNights">Klik tanggal check-in untuk mulai</div>
             </div>
           </div>
 
           <div class="divider"></div>
-          <!-- ULASAN -->
           <div id="reviews">
-            <h3 id="detailReviewTitle">★ 4.93 · 128 ulasan</h3>
+            <h3 id="detailReviewTitle" style="display:flex;align-items:center;gap:8px;">
+              <i data-lucide="star" width="18" height="18" class="icon-star"></i>
+              4.93 · 128 ulasan
+            </h3>
             <div class="reviews-grid">
               <div class="review-card"><div class="review-header"><div class="review-avatar">R</div><div><div class="review-name">Rina Kusuma</div><div class="review-date">Juni 2026</div></div></div><p class="review-text">Pengalaman honeymoon yang benar-benar tak terlupakan! Pemandangan hutan hijau dari kolam renang adalah momen paling indah.</p></div>
-              <div class="review-card"><div class="review-header"><div class="review-avatar">A</div><div><div class="review-name">Ahmad Fauzi</div><div class="review-date">Mei 2026</div></div></div><p class="review-text">Nilai banget! Kolam bersih, kamar sangat nyaman. Host (Wayan) sangat responsif dan helpful. Highly recommended!</p></div>
-              <div class="review-card"><div class="review-header"><div class="review-avatar">S</div><div><div class="review-name">Sarah M.</div><div class="review-date">April 2026</div></div></div><p class="review-text">Sarapan di tepi kolam sambil dengerin suara alam. Best experience ever. Pasti balik lagi!</p></div>
+              <div class="review-card"><div class="review-header"><div class="review-avatar">A</div><div><div class="review-name">Ahmad Fauzi</div><div class="review-date">Mei 2026</div></div></div><p class="review-text">Nilai banget! Kolam bersih, kamar sangat nyaman. Host sangat responsif dan helpful. Highly recommended!</p></div>
+              <div class="review-card"><div class="review-header"><div class="review-avatar">S</div><div><div class="review-name">Sarah M.</div><div class="review-date">April 2026</div></div></div><p class="review-text">Sarapan di tepi kolam sambil dengarkan suara alam. Best experience ever. Pasti balik lagi!</p></div>
               <div class="review-card"><div class="review-header"><div class="review-avatar">D</div><div><div class="review-name">Dimas P.</div><div class="review-date">Maret 2026</div></div></div><p class="review-text">Perfect untuk anniversary. Chef yang direkomendasikan host luar biasa. Dekorasi villa sangat indah.</p></div>
             </div>
           </div>
         </div>
 
-        <!-- RIGHT: BOOKING CARD -->
         <div class="detail-right">
           <div class="booking-card" id="bookingCard">
             <div class="booking-card-price" id="cardPrice">Rp 2.500.000 <span>/ malam</span></div>
-            <div class="booking-card-rating" id="cardRating">★ 4.93 · <a href="#reviews">128 ulasan</a></div>
-
+            <div class="booking-card-rating" id="cardRating">
+              <i data-lucide="star" width="13" height="13" class="icon-star"></i>
+              4.93 · <a href="#reviews">128 ulasan</a>
+            </div>
             <div class="date-guest-box">
               <div class="date-row">
                 <div class="date-field">
@@ -370,13 +418,11 @@
                     <option value="5+">5+ dewasa</option>
                   </select>
                 </div>
-                <span class="guest-chevron">∨</span>
+                <i data-lucide="chevron-down" width="16" height="16" class="guest-chevron-icon"></i>
               </div>
             </div>
-
             <button class="book-now-btn" id="goToBookingBtn">Reservasi</button>
             <p class="no-charge-text">Anda tidak akan dikenai biaya sekarang</p>
-
             <div class="price-breakdown">
               <div class="price-breakdown-row"><span class="pr-label" id="sumNightLabel">Rp 2.500.000 / malam</span><span id="sumSubtotal">—</span></div>
               <div class="price-breakdown-row"><span class="pr-label">Biaya kebersihan</span><span id="sumCleaning">—</span></div>
@@ -390,13 +436,9 @@
   </div><!-- /page-detail -->
 
 
-  <!-- ==========================================
-       PAGE 3: BOOKING — Data Diri
-       ========================================== -->
+  <!-- PAGE 3: STEP 1 — Data Diri -->
   <div class="page" id="page-booking-step1">
     <div class="container booking-page-container">
-
-      <!-- Progress -->
       <div class="booking-progress">
         <div class="progress-step active" data-step="1"><div class="ps-num">1</div><div class="ps-label">Data Diri</div></div>
         <div class="progress-line"></div>
@@ -406,55 +448,53 @@
       </div>
 
       <div class="booking-cols">
-        <!-- Left: Form -->
         <div class="booking-form-col">
           <h2 class="booking-page-title">Data Diri Tamu</h2>
           <p class="booking-page-sub">Lengkapi informasi di bawah untuk melanjutkan reservasi</p>
 
-          <!-- Date Picker Section (wajib diisi) -->
-          <div id="s1-date-group" style="background:linear-gradient(135deg,#FFF8F9,#FFF0F3);border:1.5px solid #FFD0D8;border-radius:14px;padding:20px;margin-bottom:24px;">
-            <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;">
-              <span style="font-size:20px;">📅</span>
+          <div id="s1-date-group" class="date-group-box">
+            <div class="date-group-header">
+              <i data-lucide="calendar" width="20" height="20"></i>
               <div>
-                <div style="font-size:15px;font-weight:700;color:#222;">Tanggal Menginap *</div>
-                <div style="font-size:13px;color:#717171;">Pilih check-in dan check-out Anda</div>
+                <div class="date-group-title">Tanggal Menginap <span class="required-badge">Wajib</span></div>
+                <div class="date-group-sub">Pilih tanggal check-in dan check-out</div>
               </div>
             </div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-              <div class="form-group-ab" style="margin:0;">
+            <div class="date-group-inputs">
+              <div class="form-group-ab">
                 <label class="form-label-ab" for="s1-checkin">Check-In</label>
                 <input class="form-input-ab" type="date" id="s1-checkin" required />
                 <span class="form-error-ab">Pilih tanggal check-in</span>
               </div>
-              <div class="form-group-ab" style="margin:0;">
+              <div class="form-group-ab">
                 <label class="form-label-ab" for="s1-checkout">Check-Out</label>
                 <input class="form-input-ab" type="date" id="s1-checkout" required />
                 <span class="form-error-ab">Pilih tanggal check-out</span>
               </div>
             </div>
-            <div id="s1-nights-display" style="margin-top:12px;font-size:14px;color:#FF385C;font-weight:600;display:none;"></div>
+            <div id="s1-nights-display" class="nights-display" style="display:none;"></div>
           </div>
 
           <div class="form-grid-ab">
             <div class="form-group-ab">
-              <label class="form-label-ab" for="bk-name">Nama Lengkap *</label>
+              <label class="form-label-ab" for="bk-name">Nama Lengkap</label>
               <input class="form-input-ab" type="text" id="bk-name" placeholder="Sesuai identitas" required />
-              <span class="form-error-ab">Nama harus diisi</span>
+              <span class="form-error-ab">Nama harus diisi (min. 2 karakter)</span>
             </div>
             <div class="form-group-ab">
-              <label class="form-label-ab" for="bk-email">Email *</label>
+              <label class="form-label-ab" for="bk-email">Email</label>
               <input class="form-input-ab" type="email" id="bk-email" placeholder="email@domain.com" required />
               <span class="form-error-ab">Email tidak valid</span>
             </div>
             <div class="form-group-ab">
-              <label class="form-label-ab" for="bk-phone">Nomor WhatsApp *</label>
+              <label class="form-label-ab" for="bk-phone">Nomor WhatsApp</label>
               <input class="form-input-ab" type="tel" id="bk-phone" placeholder="+62 812 0000 0000" required />
               <span class="form-error-ab">Nomor tidak valid</span>
             </div>
             <div class="form-group-ab">
-              <label class="form-label-ab" for="bk-guests">Jumlah Tamu *</label>
+              <label class="form-label-ab" for="bk-guests">Jumlah Tamu</label>
               <select class="form-select-ab" id="bk-guests" required>
-                <option value="">Pilih</option>
+                <option value="">Pilih jumlah tamu</option>
                 <option value="1">1 dewasa</option>
                 <option value="2">2 dewasa</option>
                 <option value="3">3 dewasa</option>
@@ -467,26 +507,29 @@
               <label class="form-label-ab" for="bk-occasion">Momen Spesial</label>
               <select class="form-select-ab" id="bk-occasion">
                 <option value="">Tidak ada (opsional)</option>
-                <option value="honeymoon">Honeymoon 💑</option>
-                <option value="anniversary">Anniversary 💕</option>
-                <option value="birthday">Ulang Tahun 🎂</option>
-                <option value="family">Liburan Keluarga 👨‍👩‍👧‍👦</option>
-                <option value="corporate">Corporate Retreat 💼</option>
+                <option value="honeymoon">Honeymoon</option>
+                <option value="anniversary">Anniversary</option>
+                <option value="birthday">Ulang Tahun</option>
+                <option value="family">Liburan Keluarga</option>
+                <option value="corporate">Corporate Retreat</option>
               </select>
             </div>
             <div class="form-group-ab full">
               <label class="form-label-ab" for="bk-request">Permintaan Khusus</label>
-              <textarea class="form-textarea-ab" id="bk-request" placeholder="Contoh: dekorasi bunga, diet vegan, early check-in pukul 10.00..."></textarea>
+              <textarea class="form-textarea-ab" id="bk-request" placeholder="Contoh: dekorasi bunga, diet vegan, early check-in..."></textarea>
             </div>
           </div>
 
           <div class="form-nav-btns">
-            <button class="btn btn-outline" id="backFromStep1">← Kembali ke Villa</button>
-            <button class="btn btn-primary btn-lg" id="nextToStep2">Lanjut ke Pembayaran →</button>
+            <button class="btn btn-outline" id="backFromStep1">
+              <i data-lucide="arrow-left" width="16" height="16"></i> Kembali
+            </button>
+            <button class="btn btn-primary btn-lg" id="nextToStep2">
+              Lanjut ke Pembayaran <i data-lucide="arrow-right" width="16" height="16"></i>
+            </button>
           </div>
         </div>
 
-        <!-- Right: Summary -->
         <div class="booking-summary-col">
           <div class="summary-card">
             <div class="summary-villa-row">
@@ -494,23 +537,26 @@
               <div class="summary-villa-info">
                 <div class="svi-type" id="sum1Type">Villa di Ubud, Bali</div>
                 <div class="svi-name" id="sum1Name">Villa Kayu Indah</div>
-                <div class="svi-rating">★ <span id="sum1Rating">4.93</span> · <span id="sum1Reviews">128</span> ulasan</div>
+                <div class="svi-rating">
+                  <i data-lucide="star" width="11" height="11" class="icon-star"></i>
+                  <span id="sum1Rating">4.93</span> · <span id="sum1Reviews">128</span> ulasan
+                </div>
               </div>
             </div>
             <div class="divider"></div>
             <div class="sum-dates-box">
-              <div class="sum-date-row"><span>📅 Check-In</span><strong id="sum1CheckIn">—</strong></div>
-              <div class="sum-date-row"><span>🏁 Check-Out</span><strong id="sum1CheckOut">—</strong></div>
-              <div class="sum-date-row"><span>🌙 Durasi</span><strong id="sum1Nights">—</strong></div>
+              <div class="sum-date-row"><span>Check-In</span><strong id="sum1CheckIn">—</strong></div>
+              <div class="sum-date-row"><span>Check-Out</span><strong id="sum1CheckOut">—</strong></div>
+              <div class="sum-date-row"><span>Durasi</span><strong id="sum1Nights">—</strong></div>
             </div>
             <div class="divider"></div>
             <div class="price-breakdown">
               <div class="summary-row"><label id="sum1NightLabel">Harga per malam</label><span id="sum1Subtotal">—</span></div>
               <div class="summary-row"><label>Biaya kebersihan</label><span id="sum1Cleaning">—</span></div>
-              <div class="summary-row"><label>Pajak & layanan</label><span id="sum1Tax">—</span></div>
+              <div class="summary-row"><label>Pajak &amp; layanan</label><span id="sum1Tax">—</span></div>
             </div>
             <div class="divider"></div>
-            <div class="summary-total"><span>Total IDR</span><span id="sum1Total" style="color:#FF385C;">—</span></div>
+            <div class="summary-total"><span>Total IDR</span><span id="sum1Total">—</span></div>
           </div>
         </div>
       </div>
@@ -518,14 +564,11 @@
   </div><!-- /page-booking-step1 -->
 
 
-  <!-- ==========================================
-       PAGE 4: BOOKING — Pembayaran
-       ========================================== -->
+  <!-- PAGE 4: STEP 2 — Pembayaran -->
   <div class="page" id="page-booking-step2">
     <div class="container booking-page-container">
-
       <div class="booking-progress">
-        <div class="progress-step done" data-step="1"><div class="ps-num">✓</div><div class="ps-label">Data Diri</div></div>
+        <div class="progress-step done" data-step="1"><div class="ps-num"><i data-lucide="check" width="14" height="14"></i></div><div class="ps-label">Data Diri</div></div>
         <div class="progress-line active"></div>
         <div class="progress-step active" data-step="2"><div class="ps-num">2</div><div class="ps-label">Pembayaran</div></div>
         <div class="progress-line"></div>
@@ -534,38 +577,41 @@
 
       <div class="booking-cols">
         <div class="booking-form-col">
-          <h2 class="booking-page-title">Pilih Metode Pembayaran</h2>
+          <h2 class="booking-page-title">Metode Pembayaran</h2>
           <p class="booking-page-sub">Pilih cara yang paling nyaman untuk Anda</p>
 
           <div class="payment-methods">
             <div class="payment-method" data-payment="transfer" id="pm-transfer" role="button" tabindex="0">
-              <span class="pm-icon">🏦</span>
+              <span class="pm-icon-wrap"><i data-lucide="building-2" width="22" height="22"></i></span>
               <div class="pm-info"><div class="pm-name">Transfer Bank</div><div class="pm-desc">BCA, Mandiri, BNI, BRI</div></div>
-              <div class="pm-check"></div>
+              <div class="pm-check"><i data-lucide="check" width="14" height="14"></i></div>
             </div>
             <div class="payment-method" data-payment="cc" id="pm-cc" role="button" tabindex="0">
-              <span class="pm-icon">💳</span>
+              <span class="pm-icon-wrap"><i data-lucide="credit-card" width="22" height="22"></i></span>
               <div class="pm-info"><div class="pm-name">Kartu Kredit / Debit</div><div class="pm-desc">Visa, Mastercard, JCB</div></div>
-              <div class="pm-check"></div>
+              <div class="pm-check"><i data-lucide="check" width="14" height="14"></i></div>
             </div>
             <div class="payment-method" data-payment="va" id="pm-va" role="button" tabindex="0">
-              <span class="pm-icon">📱</span>
+              <span class="pm-icon-wrap"><i data-lucide="smartphone" width="22" height="22"></i></span>
               <div class="pm-info"><div class="pm-name">Virtual Account</div><div class="pm-desc">Semua bank VA</div></div>
-              <div class="pm-check"></div>
+              <div class="pm-check"><i data-lucide="check" width="14" height="14"></i></div>
             </div>
             <div class="payment-method" data-payment="qris" id="pm-qris" role="button" tabindex="0">
-              <span class="pm-icon">📲</span>
+              <span class="pm-icon-wrap"><i data-lucide="qr-code" width="22" height="22"></i></span>
               <div class="pm-info"><div class="pm-name">QRIS</div><div class="pm-desc">GoPay, OVO, DANA, ShopeePay</div></div>
-              <div class="pm-check"></div>
+              <div class="pm-check"><i data-lucide="check" width="14" height="14"></i></div>
             </div>
           </div>
 
-          <!-- Dynamic payment fields -->
           <div id="paymentFields"></div>
 
           <div class="form-nav-btns" style="margin-top:28px;">
-            <button class="btn btn-outline" id="backFromStep2">← Kembali</button>
-            <button class="btn btn-primary btn-lg" id="nextToStep3">Lanjut ke Konfirmasi →</button>
+            <button class="btn btn-outline" id="backFromStep2">
+              <i data-lucide="arrow-left" width="16" height="16"></i> Kembali
+            </button>
+            <button class="btn btn-primary btn-lg" id="nextToStep3">
+              Lanjut ke Konfirmasi <i data-lucide="arrow-right" width="16" height="16"></i>
+            </button>
           </div>
         </div>
 
@@ -576,23 +622,23 @@
               <div class="summary-villa-info">
                 <div class="svi-type" id="sum2Type">Villa di Ubud, Bali</div>
                 <div class="svi-name" id="sum2Name">Villa Kayu Indah</div>
-                <div class="svi-rating">★ <span id="sum2Rating">4.93</span></div>
+                <div class="svi-rating"><i data-lucide="star" width="11" height="11" class="icon-star"></i> <span id="sum2Rating">4.93</span></div>
               </div>
             </div>
             <div class="divider"></div>
             <div class="sum-dates-box">
-              <div class="sum-date-row"><span>📅 Check-In</span><strong id="sum2CheckIn">—</strong></div>
-              <div class="sum-date-row"><span>🏁 Check-Out</span><strong id="sum2CheckOut">—</strong></div>
-              <div class="sum-date-row"><span>🌙 Durasi</span><strong id="sum2Nights">—</strong></div>
+              <div class="sum-date-row"><span>Check-In</span><strong id="sum2CheckIn">—</strong></div>
+              <div class="sum-date-row"><span>Check-Out</span><strong id="sum2CheckOut">—</strong></div>
+              <div class="sum-date-row"><span>Durasi</span><strong id="sum2Nights">—</strong></div>
             </div>
             <div class="divider"></div>
             <div class="price-breakdown">
               <div class="summary-row"><label id="sum2NightLabel">Harga per malam</label><span id="sum2Subtotal">—</span></div>
               <div class="summary-row"><label>Biaya kebersihan</label><span id="sum2Cleaning">—</span></div>
-              <div class="summary-row"><label>Pajak & layanan</label><span id="sum2Tax">—</span></div>
+              <div class="summary-row"><label>Pajak &amp; layanan</label><span id="sum2Tax">—</span></div>
             </div>
             <div class="divider"></div>
-            <div class="summary-total"><span>Total IDR</span><span id="sum2Total" style="color:#FF385C;">—</span></div>
+            <div class="summary-total"><span>Total IDR</span><span id="sum2Total">—</span></div>
           </div>
         </div>
       </div>
@@ -600,28 +646,24 @@
   </div><!-- /page-booking-step2 -->
 
 
-  <!-- ==========================================
-       PAGE 5: BOOKING — Konfirmasi
-       ========================================== -->
+  <!-- PAGE 5: STEP 3 — Konfirmasi -->
   <div class="page" id="page-booking-step3">
     <div class="container booking-page-container">
-
       <div class="booking-progress">
-        <div class="progress-step done" data-step="1"><div class="ps-num">✓</div><div class="ps-label">Data Diri</div></div>
+        <div class="progress-step done" data-step="1"><div class="ps-num"><i data-lucide="check" width="14" height="14"></i></div><div class="ps-label">Data Diri</div></div>
         <div class="progress-line active"></div>
-        <div class="progress-step done" data-step="2"><div class="ps-num">✓</div><div class="ps-label">Pembayaran</div></div>
+        <div class="progress-step done" data-step="2"><div class="ps-num"><i data-lucide="check" width="14" height="14"></i></div><div class="ps-label">Pembayaran</div></div>
         <div class="progress-line active"></div>
         <div class="progress-step active" data-step="3"><div class="ps-num">3</div><div class="ps-label">Konfirmasi</div></div>
       </div>
 
       <div class="booking-cols">
         <div class="booking-form-col">
-          <h2 class="booking-page-title">Tinjau Reservasi Anda</h2>
+          <h2 class="booking-page-title">Tinjau Reservasi</h2>
           <p class="booking-page-sub">Pastikan semua detail sudah benar sebelum konfirmasi</p>
 
-          <!-- Review detail -->
           <div class="review-detail-card">
-            <h4 style="margin-bottom:16px;font-size:16px;font-weight:700;">📋 Ringkasan Booking</h4>
+            <h4 style="margin-bottom:20px;font-size:15px;font-weight:700;color:#222;">Ringkasan Booking</h4>
             <div class="review-detail-row"><span>Villa</span><strong id="rev-villa">—</strong></div>
             <div class="review-detail-row"><span>Nama Tamu</span><strong id="rev-name">—</strong></div>
             <div class="review-detail-row"><span>Email</span><strong id="rev-email">—</strong></div>
@@ -630,19 +672,23 @@
             <div class="review-detail-row"><span>Check-Out</span><strong id="rev-checkout">—</strong></div>
             <div class="review-detail-row"><span>Durasi</span><strong id="rev-nights">—</strong></div>
             <div class="review-detail-row"><span>Pembayaran</span><strong id="rev-payment">—</strong></div>
-            <div class="review-detail-row total-row"><span>Total Bayar</span><strong id="rev-total" style="color:#FF385C;font-size:18px;">—</strong></div>
+            <div class="review-detail-row total-row"><span>Total Bayar</span><strong id="rev-total">—</strong></div>
           </div>
 
           <div class="terms-box">
-            <p>Dengan menekan tombol di bawah, Anda menyetujui <strong>Aturan Rumah</strong>, <strong>Kebijakan Pembatalan</strong>, dan <strong>Ketentuan Layanan</strong> Villa Santara. Pembayaran dilindungi enkripsi SSL.</p>
+            <p>Dengan menekan tombol di bawah, Anda menyetujui <strong>Aturan Rumah</strong>, <strong>Kebijakan Pembatalan</strong>, dan <strong>Ketentuan Layanan</strong> Villa Santara.</p>
           </div>
 
           <div class="form-nav-btns">
-            <button class="btn btn-outline" id="backFromStep3">← Ubah Pembayaran</button>
+            <button class="btn btn-outline" id="backFromStep3">
+              <i data-lucide="arrow-left" width="16" height="16"></i> Ubah
+            </button>
             <button class="btn btn-primary btn-lg btn-confirm" id="submitBooking">
-              🔒 Konfirmasi & Bayar Sekarang
+              <i data-lucide="lock" width="16" height="16"></i>
+              Konfirmasi &amp; Bayar
             </button>
           </div>
+          <p class="ssl-note"><i data-lucide="shield-check" width="14" height="14"></i> Pembayaran dijamin aman dengan enkripsi SSL</p>
         </div>
 
         <div class="booking-summary-col">
@@ -652,25 +698,25 @@
               <div class="summary-villa-info">
                 <div class="svi-type" id="sum3Type">Villa di Ubud, Bali</div>
                 <div class="svi-name" id="sum3Name">Villa Kayu Indah</div>
-                <div class="svi-rating">★ <span id="sum3Rating">4.93</span></div>
+                <div class="svi-rating"><i data-lucide="star" width="11" height="11" class="icon-star"></i> <span id="sum3Rating">4.93</span></div>
               </div>
             </div>
             <div class="divider"></div>
             <div class="free-cancel">
-              <div class="fc-title">✅ Pembatalan gratis</div>
-              <div class="fc-desc">Batalkan dalam 24 jam untuk pengembalian uang penuh. <a href="#" class="fc-link">Kebijakan lengkap</a></div>
+              <div class="fc-title"><i data-lucide="shield-check" width="15" height="15"></i> Pembatalan gratis</div>
+              <div class="fc-desc">Batalkan dalam 24 jam untuk pengembalian dana penuh. <a href="#" class="fc-link">Kebijakan lengkap</a></div>
             </div>
             <div class="divider"></div>
             <div class="price-breakdown">
               <div class="summary-row"><label id="sum3NightLabel">Harga per malam</label><span id="sum3Subtotal">—</span></div>
               <div class="summary-row"><label>Biaya kebersihan</label><span id="sum3Cleaning">—</span></div>
-              <div class="summary-row"><label>Pajak & layanan</label><span id="sum3Tax">—</span></div>
+              <div class="summary-row"><label>Pajak &amp; layanan</label><span id="sum3Tax">—</span></div>
             </div>
             <div class="divider"></div>
-            <div class="summary-total"><span>Total IDR</span><span id="sum3Total" style="color:#FF385C;font-size:18px;font-weight:800;">—</span></div>
-            <div class="urgency-banner" style="margin-top:16px;">
-              <span class="ub-icon">🔥</span>
-              <span class="ub-text">Jarang tersedia! Biasanya laku dalam 2 jam</span>
+            <div class="summary-total"><span>Total IDR</span><span id="sum3Total">—</span></div>
+            <div class="urgency-banner">
+              <i data-lucide="flame" width="16" height="16"></i>
+              <span>Jarang tersedia — biasanya laku dalam 2 jam</span>
             </div>
           </div>
         </div>
@@ -679,18 +725,16 @@
   </div><!-- /page-booking-step3 -->
 
 
-  <!-- ==========================================
-       PAGE 6: SUCCESS
-       ========================================== -->
+  <!-- PAGE 6: SUCCESS -->
   <div class="page" id="page-success">
     <div class="success-page-wrap">
       <div class="success-card">
         <div class="success-animation">
           <div class="success-circle">
-            <span class="success-check">✓</span>
+            <i data-lucide="check" width="36" height="36" class="icon-white"></i>
           </div>
         </div>
-        <h1 class="success-title">Pemesanan Berhasil! 🎉</h1>
+        <h1 class="success-title">Pemesanan Berhasil!</h1>
         <p class="success-subtitle">Terima kasih, <strong id="suc-name">Tamu</strong>! Reservasi Anda telah dikonfirmasi.</p>
 
         <div class="success-id-box">
@@ -699,21 +743,21 @@
         </div>
 
         <div class="success-detail-grid">
-          <div class="sdg-item"><span class="sdg-icon">🏡</span><div class="sdg-info"><div class="sdg-label">Villa</div><div class="sdg-value" id="suc-villa">—</div></div></div>
-          <div class="sdg-item"><span class="sdg-icon">📅</span><div class="sdg-info"><div class="sdg-label">Check-In</div><div class="sdg-value" id="suc-checkin">—</div></div></div>
-          <div class="sdg-item"><span class="sdg-icon">🏁</span><div class="sdg-info"><div class="sdg-label">Check-Out</div><div class="sdg-value" id="suc-checkout">—</div></div></div>
-          <div class="sdg-item"><span class="sdg-icon">🌙</span><div class="sdg-info"><div class="sdg-label">Durasi</div><div class="sdg-value" id="suc-nights">—</div></div></div>
-          <div class="sdg-item"><span class="sdg-icon">💳</span><div class="sdg-info"><div class="sdg-label">Metode Bayar</div><div class="sdg-value" id="suc-payment">—</div></div></div>
-          <div class="sdg-item"><span class="sdg-icon">💰</span><div class="sdg-info"><div class="sdg-label">Total Dibayar</div><div class="sdg-value" id="suc-total" style="color:#FF385C;font-weight:700;">—</div></div></div>
+          <div class="sdg-item"><i data-lucide="home" width="20" height="20"></i><div class="sdg-info"><div class="sdg-label">Villa</div><div class="sdg-value" id="suc-villa">—</div></div></div>
+          <div class="sdg-item"><i data-lucide="calendar" width="20" height="20"></i><div class="sdg-info"><div class="sdg-label">Check-In</div><div class="sdg-value" id="suc-checkin">—</div></div></div>
+          <div class="sdg-item"><i data-lucide="calendar-check" width="20" height="20"></i><div class="sdg-info"><div class="sdg-label">Check-Out</div><div class="sdg-value" id="suc-checkout">—</div></div></div>
+          <div class="sdg-item"><i data-lucide="moon" width="20" height="20"></i><div class="sdg-info"><div class="sdg-label">Durasi</div><div class="sdg-value" id="suc-nights">—</div></div></div>
+          <div class="sdg-item"><i data-lucide="credit-card" width="20" height="20"></i><div class="sdg-info"><div class="sdg-label">Metode Bayar</div><div class="sdg-value" id="suc-payment">—</div></div></div>
+          <div class="sdg-item"><i data-lucide="wallet" width="20" height="20"></i><div class="sdg-info"><div class="sdg-label">Total Dibayar</div><div class="sdg-value accent" id="suc-total">—</div></div></div>
         </div>
 
         <div class="success-info-box">
-          <p>📧 Detail booking & instruksi pembayaran telah dikirim ke <strong id="suc-email">email Anda</strong></p>
-          <p>💬 Ada pertanyaan? WhatsApp kami di <strong>+62 812 3456 7890</strong></p>
+          <p><i data-lucide="mail" width="14" height="14"></i> Detail booking dikirim ke <strong id="suc-email">email Anda</strong></p>
+          <p><i data-lucide="phone" width="14" height="14"></i> Butuh bantuan? WhatsApp: <strong>+62 812 3456 7890</strong></p>
         </div>
 
         <div class="success-actions">
-          <button class="btn btn-primary btn-lg" id="sucBackHome">← Kembali ke Beranda</button>
+          <button class="btn btn-primary btn-lg" id="sucBackHome">Kembali ke Beranda</button>
           <button class="btn btn-outline btn-lg" id="sucBookAnother">Pesan Villa Lain</button>
         </div>
       </div>
@@ -722,12 +766,12 @@
 
 </div><!-- /app -->
 
-<!-- Toast -->
 <div class="toast-container" aria-live="polite"></div>
+<button class="scroll-top" id="scrollTop" aria-label="Kembali ke atas">
+  <i data-lucide="chevron-up" width="20" height="20"></i>
+</button>
 
-<!-- Scroll to Top -->
-<button class="scroll-top" id="scrollTop" aria-label="Kembali ke atas">↑</button>
-
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>
